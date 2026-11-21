@@ -1,4 +1,10 @@
 """Generate a dummy model artifact for CI/CD testing."""
+import sys
+from pathlib import Path
+
+# Tambahkan direktori root ke sys.path agar bisa import folder 'ml'
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 import joblib
 import numpy as np
 import pandas as pd
@@ -7,8 +13,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
-from pathlib import Path
 from ml import config
+
+# ... (biarkan sisa kode di bawahnya tetap sama) ...
 
 def create_dummy_model():
     print("Creating dummy model for CI...")

@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: . # <-- Tambahan penting agar Python mengenali folder root
 
     steps:
     - name: Checkout repository
@@ -31,7 +33,7 @@ jobs:
 
     - name: Lint with Ruff
       run: |
-        ruff check . || true # Tambahkan || true agar warning kuning tidak menggagalkan CI
+        ruff check . || true
 
     - name: Generate Dummy Model Artifact
       run: |
