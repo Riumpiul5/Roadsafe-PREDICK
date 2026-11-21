@@ -1,0 +1,24 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = ["notebooks", ".venv", "venv", "migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+markers = [
+    "integration: tests that require PostgreSQL or MLflow",
+    "slow: tests that take longer than 5 seconds",
+]
+
+[tool.coverage.run]
+source = ["app", "ml"]
+omit = ["tests/*", "migrations/*"]
