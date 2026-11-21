@@ -1,10 +1,4 @@
 """Generate a dummy model artifact for CI/CD testing."""
-import sys
-from pathlib import Path
-
-# Tambahkan root directory ke sys.path agar bisa import folder 'ml'
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-
 import joblib
 import numpy as np
 import pandas as pd
@@ -13,20 +7,33 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
+from pathlib import Path
 from ml import config
 
 def create_dummy_model():
     print("Creating dummy model for CI...")
     
-    # Data dummy (1 baris) agar pipeline bisa di-fit
-    df = pd.DataFrame([{
-        "longitude": -0.123, "latitude": 51.507, "speed_limit": 30,
-        "hour": 18, "day_of_week": 5, "month": 11,
-        "road_type": "Single carriageway", "weather_conditions": "Raining",
-        "road_surface_conditions": "Wet", "light_conditions": "Darkness - lights lit",
-        "urban_or_rural_area": "Urban", "junction_detail": "T or staggered junction"
-    }])
-    y = [2] # Dummy target (Slight)
+    # Berikan 2 baris data dummy agar ada 2 kelas target
+    data = [
+        {
+            "longitude": -0.123, "latitude": 51.507, "speed_limit": 30,
+            "hour": 18, "day_of_week": 5, "month": 11,
+            "road_type": "Single carriageway", "weather_conditions": "Raining",
+            "road_surface_conditions": "Wet", "light_conditions": "Darkness - lights lit",
+            "urban_or_rural_area": "Urban", "junction_detail": "T or staggered junction"
+        },
+        {
+            "longitude": -0.500, "latitude": 51.600, "speed_limit": 60,
+            "hour": 8, "day_of_week": 1, "month": 3,
+            "road_type": "Dual carriageway", "weather_conditions": "Fine",
+            "road_surface_conditions": "Dry", "light_conditions": "Daylight",
+            "urban_or_rural_area": "Rural", "junction_detail": "Not at junction"
+        }
+    ]
+    df = pd.DataFrame(data)
+    
+    # Target harus memiliki minimal 2 kelas berbeda (0 dan 2)
+    y = [0, 2] 
 
     num_cols = config.NUMERICAL_FEATURES
     cat_cols = config.CATEGORICAL_FEATURES
