@@ -1,6 +1,7 @@
 """Pydantic schemas for API request and response validation."""
-from typing import Dict, List
+
 from pydantic import BaseModel, Field
+
 
 class PredictionRequest(BaseModel):
     # ... (Biarkan kode ini sama seperti sebelumnya) ...
@@ -30,11 +31,11 @@ class PredictionRequest(BaseModel):
     }
 
 class BatchPredictionRequest(BaseModel):
-    items: List[PredictionRequest] = Field(..., max_length=100)
+    items: list[PredictionRequest] = Field(..., max_length=100)
 
 class PredictionResponse(BaseModel):
     prediction: str
-    probabilities: Dict[str, float]
+    probabilities: dict[str, float]
     model_version: str
     request_id: str
 
@@ -42,14 +43,14 @@ class PredictionResponse(BaseModel):
     model_config = {"protected_namespaces": ()}
 
 class BatchPredictionResponse(BaseModel):
-    predictions: List[PredictionResponse]
+    predictions: list[PredictionResponse]
     total: int
 
 class ModelInfoResponse(BaseModel):
     model_name: str
     model_version: str
     algorithm: str
-    features: List[str]
+    features: list[str]
     is_loaded: bool
 
     # TAMBAHKAN BARIS INI
@@ -61,7 +62,7 @@ class FeatureContribution(BaseModel):
     impact: str
 
 class ExplanationResponse(PredictionResponse):
-    explanation: List[FeatureContribution]
+    explanation: list[FeatureContribution]
 
     # TAMBAHKAN BARIS INI
     model_config = {"protected_namespaces": ()}

@@ -2,11 +2,12 @@
 import logging
 import uuid
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.core.config import get_settings
 from app.api.routes import router
+from app.core.config import get_settings
 from app.services.model_service import model_service
 
 # Configure logging

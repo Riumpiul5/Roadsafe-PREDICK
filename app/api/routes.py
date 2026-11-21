@@ -1,17 +1,21 @@
 """API routes for RoadSafe AI."""
-import uuid
 import logging
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
+from app.database import repository
+from app.database.connection import get_db
 from app.schemas.prediction import (
-    PredictionRequest, PredictionResponse, 
-    BatchPredictionRequest, BatchPredictionResponse,
-    ModelInfoResponse, ExplanationResponse,
+    BatchPredictionRequest,
+    BatchPredictionResponse,
+    ExplanationResponse,
+    ModelInfoResponse,
+    PredictionRequest,
+    PredictionResponse,
 )
 from app.services.model_service import model_service
-from app.database.connection import get_db
-from app.database import repository
 
 logger = logging.getLogger(__name__)
 router = APIRouter()

@@ -1,8 +1,9 @@
 """Test ML preprocessing functions."""
 import pandas as pd
-import pytest
-from ml.preprocessing import clean_data, engineer_features
+
 from ml import config
+from ml.preprocessing import clean_data, engineer_features
+
 
 def test_clean_data_removes_duplicates():
     df = pd.DataFrame({

@@ -3,12 +3,12 @@
 Handles schema normalization, cleaning, feature engineering,
 and building a scikit-learn ColumnTransformer.
 """
-import pandas as pd
 import numpy as np
+import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 
 from ml import config
 

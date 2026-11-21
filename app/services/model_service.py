@@ -1,13 +1,12 @@
 """Model service for loading and predicting with the RoadSafe AI model."""
 import logging
 import uuid
-import shap
-from pathlib import Path
-from typing import Dict, Any, List
-import numpy as np
+from typing import Any
 
 import joblib
 import pandas as pd
+import shap
+
 from app.core.config import get_settings
 from app.schemas.prediction import PredictionRequest
 
@@ -32,7 +31,7 @@ class ModelService:
         self.pipeline = joblib.load(path)
         logger.info(f"Model loaded successfully from {path}")
 
-    def predict(self, request: PredictionRequest, request_id: str = None) -> Dict[str, Any]:
+    def predict(self, request: PredictionRequest, request_id: str = None) -> dict[str, Any]:
         """Predict a single record."""
         if self.pipeline is None:
             raise RuntimeError("Model is not loaded.")
@@ -59,11 +58,11 @@ class ModelService:
             logger.error(f"Prediction failed for request {request_id}: {e}")
             raise e
 
-    def predict_batch(self, requests: List[PredictionRequest]) -> List[Dict[str, Any]]:
+    def predict_batch(self, requests: list[PredictionRequest]) -> list[dict[str, Any]]:
         """Predict a batch of records."""
         return [self.predict(req) for req in requests]
     
-    def explain_prediction(self, request: PredictionRequest, request_id: str = None) -> Dict[str, Any]:
+    def explain_prediction(self, request: PredictionRequest, request_id: str = None) -> dict[str, Any]:
         """Predict and explain using SHAP."""
         if self.pipeline is None:
             raise RuntimeError("Model is not loaded.")
@@ -102,7 +101,7 @@ class ModelService:
         # 4. Format Feature Contributions
         # Bersihkan nama fitur (misal: "cat__weather_conditions_Raining" -> "weather_conditions_Raining")
         contributions = []
-        for i, (name, val) in enumerate(zip(feature_names, class_shap_values)):
+        for i, (name, val) in enumerate(zip(feature_names, class_shap_values, strict=False)):
             if abs(val) > 0.01: # Hanya tampilkan fitur yang pengaruhnya signifikan
                 clean_name = name.replace("num__", "").replace("cat__", "")
                 contributions.append({

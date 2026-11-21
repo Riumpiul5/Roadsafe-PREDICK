@@ -1,5 +1,4 @@
 """Test FastAPI endpoints."""
-import pytest
 
 VALID_PAYLOAD = {
     "longitude": -0.123, "latitude": 51.507, "speed_limit": 30,

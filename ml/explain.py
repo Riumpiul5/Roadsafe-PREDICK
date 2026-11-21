@@ -1,13 +1,12 @@
 """Generate global SHAP explanations and save plots."""
-import shap
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
-import joblib
 from pathlib import Path
 
-from ml.preprocessing import prepare_data
+import joblib
+import matplotlib.pyplot as plt
+import shap
+
 from ml import config
+from ml.preprocessing import prepare_data
 
 FIG_DIR = Path("reports/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)

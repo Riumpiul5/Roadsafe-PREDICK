@@ -1,23 +1,22 @@
 """Train, compare, and track ML models using MLflow."""
-import time
 import json
+import time
 from pathlib import Path
 
 import joblib
 import mlflow
 import mlflow.sklearn
-import numpy as np
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
+from lightgbm import LGBMClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, cross_validate
+from sklearn.pipeline import Pipeline
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.utils.class_weight import compute_sample_weight
 from xgboost import XGBClassifier
-from lightgbm import LGBMClassifier
 
-from ml.preprocessing import prepare_data, build_preprocessor
 from ml import config
+from ml.preprocessing import build_preprocessor, prepare_data
 
 ARTIFACTS_DIR = Path("artifacts/model")
 ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)

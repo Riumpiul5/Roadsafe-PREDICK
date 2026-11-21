@@ -1,8 +1,11 @@
 """Inference module for RoadSafe AI."""
-import pandas as pd
-import joblib
 from pathlib import Path
+
+import joblib
+import pandas as pd
+
 from ml import config
+
 
 class SeverityPredictor:
     def __init__(self, model_path: Path = None):

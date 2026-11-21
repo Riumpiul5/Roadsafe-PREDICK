@@ -6,7 +6,7 @@ It does NOT fabricate data. If the download fails, it exits with a non-zero code
 """
 import hashlib
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -141,7 +141,7 @@ def _write_manifest(schema_type: str, checksum: str) -> None:
 | Size | {OUTPUT_CSV.stat().st_size / 1e6:.2f} MB |
 | SHA-256 | `{checksum}` |
 | Schema detected | `{schema_type}` |
-| Downloaded at | {datetime.now(timezone.utc).isoformat()} |
+| Downloaded at | {datetime.now(UTC).isoformat()} |
 | Downloaded by | `scripts/download_data.py` |
 
 ## Notes

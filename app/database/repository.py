@@ -1,14 +1,17 @@
 """Repository layer for database operations."""
-from typing import List, Dict, Any
+from typing import Any
+
 from sqlalchemy.orm import Session
+
 from app.database import models
+
 
 def create_prediction(
     db: Session,
     request_id: str,
-    input_data: Dict[str, Any],
+    input_data: dict[str, Any],
     prediction: str,
-    probabilities: Dict[str, float],
+    probabilities: dict[str, float],
     model_version: str
 ) -> models.PredictionHistory:
     """Save a new prediction to the database."""
@@ -24,7 +27,7 @@ def create_prediction(
     db.refresh(db_record)
     return db_record
 
-def get_predictions(db: Session, skip: int = 0, limit: int = 10) -> List[models.PredictionHistory]:
+def get_predictions(db: Session, skip: int = 0, limit: int = 10) -> list[models.PredictionHistory]:
     """Fetch prediction history with pagination."""
     return db.query(models.PredictionHistory)\
              .order_by(models.PredictionHistory.created_at.desc())\

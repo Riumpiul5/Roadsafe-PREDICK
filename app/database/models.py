@@ -1,8 +1,8 @@
 """SQLAlchemy ORM models."""
-from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, func, JSON # Ubah import ini
+from sqlalchemy import JSON, Column, DateTime, Integer, String, func  # Ubah import ini
 
 from app.database.connection import Base
+
 
 class PredictionHistory(Base):
     __tablename__ = "prediction_history"

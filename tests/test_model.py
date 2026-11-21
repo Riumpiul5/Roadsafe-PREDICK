@@ -1,6 +1,7 @@
 """Test ModelService loading and inference."""
-from app.services.model_service import ModelService
 from app.schemas.prediction import PredictionRequest
+from app.services.model_service import ModelService
+
 
 def test_model_load():
     service = ModelService()

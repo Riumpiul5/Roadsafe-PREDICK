@@ -1,8 +1,10 @@
 """Evaluate the saved RoadSafe AI model on the holdout test set."""
 import joblib
 from sklearn.metrics import classification_report, confusion_matrix
-from ml.preprocessing import prepare_data
+
 from ml import config
+from ml.preprocessing import prepare_data
+
 
 def evaluate_model():
     print("=== Phase 5: Model Evaluation on Test Set ===")

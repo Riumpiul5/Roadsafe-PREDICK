@@ -5,7 +5,8 @@ from pathlib import Path
 # Add root to path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from ml.preprocessing import prepare_data, build_preprocessor
+from ml.preprocessing import build_preprocessor, prepare_data
+
 
 def main():
     print("=== Testing Preprocessing Pipeline ===")
@@ -18,7 +19,7 @@ def main():
     print(f"y_test:  {y_test.shape}")
     
     print("\n=== Target Classes ===")
-    print(dict(zip(label_encoder.classes_, label_encoder.transform(label_encoder.classes_))))
+    print(dict(zip(label_encoder.classes_, label_encoder.transform(label_encoder.classes_), strict=False)))
     
     print("\n=== Fitting Preprocessor on Train Data ===")
     preprocessor = build_preprocessor()
