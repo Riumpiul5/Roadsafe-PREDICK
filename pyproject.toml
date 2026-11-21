@@ -12,7 +12,7 @@ target-version = ["py311"]
 
 [tool.pytest.ini_options]
 minversion = "8.0"
-addopts = "-ra -q --strict-markers"
+addopts = "-ra -q --strict-markers -W ignore::DeprecationWarning"
 testpaths = ["tests"]
 markers = [
     "integration: tests that require PostgreSQL or MLflow",

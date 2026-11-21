@@ -1,0 +1,9 @@
+{
+    "best_model": "RandomForest",
+    "best_f1_macro": 0.37378068555941574,
+    "label_encoder_classes": [
+        "Fatal",
+        "Serious",
+        "Slight"
+    ]
+}

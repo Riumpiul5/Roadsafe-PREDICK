@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: roadsafe-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-roadsafe}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-roadsafe}
+      POSTGRES_DB: ${POSTGRES_DB:-roadsafe}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U roadsafe -d roadsafe"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.17.2
+    container_name: roadsafe-mlflow
+    ports:
+      - "5000:5000"
+    command: >
+      mlflow server 
+      --host 0.0.0.0 
+      --port 5000 
+      --backend-store-uri postgresql://${POSTGRES_USER:-roadsafe}:${POSTGRES_PASSWORD:-roadsafe}@db:5432/${POSTGRES_DB:-roadsafe}
+      --default-artifact-root /mlflow/artifacts
+    volumes:
+      - mlflow_artifacts:/mlflow/artifacts
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  api:
+    build: .
+    container_name: roadsafe-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://${POSTGRES_USER:-roadsafe}:${POSTGRES_PASSWORD:-roadsafe}@db:5432/${POSTGRES_DB:-roadsafe}
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    command: >
+      sh -c "alembic upgrade head && 
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  mlflow_artifacts:
